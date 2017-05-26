@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTML5 Tetris</title>
+        <link rel='stylesheet' href='//dotnsf-html.au-syd.mybluemix.net/style.css' />
+    </head>
+    <body onload="connect()">
+        <audio id="clearsound" src="//dotnsf-html.au-syd.mybluemix.net/pop.ogg" preload="auto"></audio>
+        <canvas width='300' height='600'></canvas>
+        <script src='//dotnsf-html.au-syd.mybluemix.net/tetris.js'></script>
+        <script src='//dotnsf-html.au-syd.mybluemix.net/controller.js'></script>
+        <script src='//dotnsf-html.au-syd.mybluemix.net/render.js'></script>
+    </body>
+</html>
