@@ -36,7 +36,7 @@ $(function(){
 	if( window.DeviceOrientationEvent ){
 	    window.addEventListener( "deviceorientation", deviceOrientation );
 	}
- 
+
 	$('#frm').submit( function(){
 		deviceid = $('#deviceid').val();
 		devicetype = $('#devicetype').val();
@@ -44,7 +44,7 @@ $(function(){
 
 		return false;
 	});
-	
+
 	var clientID = "d:quickstart:" + devicetype + ":" + deviceid;
 	console.log( "clientID=" + clientID );
 	client = new Messaging.Client("quickstart.messaging.internetofthings.ibmcloud.com", 443, clientID );
@@ -55,18 +55,18 @@ $(function(){
 function deviceMotion( e ) {
 	e.preventDefault();
 	//console.log( e );
-	
+
 	ac = e.acceleration;
 	acg = e.accelerationIncludingGravity;
 	rot = e.rotationRate;
-	
+
 	publishMessage();
 }
 
 function deviceOrientation( e ) {
 	//e.preventDefault();
 	//console.log( e );
-	
+
 	var tiltLR = e.gamma;
 	var tiltFB = e.beta;
 	var dir = e.alpha;
@@ -74,7 +74,7 @@ function deviceOrientation( e ) {
 	ori['tiltLR'] = tiltLR;
 	ori['tiltFB'] = tiltFB;
 	ori['dir'] = dir;
-	
+
 	publishMessage();
 }
 
@@ -83,29 +83,40 @@ function publishMessage(){
 		var d = {};
 		if( ac != null ){
 			d['ac'] = ac;
+			/*
 			$('#ac_x').html( ac['x'] );
 			$('#ac_y').html( ac['y'] );
 			$('#ac_z').html( ac['z'] );
+			*/
 		}
 		if( acg != null ){
 			d['acg'] = acg;
+			/*
 			$('#acg_x').html( acg['x'] );
 			$('#acg_y').html( acg['y'] );
 			$('#acg_z').html( acg['z'] );
+			*/
 		}
 		if( rot != null ){
 			d['rot'] = rot;
+			/*
 			$('#rot_a').html( rot['alpha'] );
 			$('#rot_b').html( rot['beta'] );
 			$('#rot_g').html( rot['gamma'] );
+			*/
 		}
 		if( ori != null ){
 			d['ori'] = ori;
+			/*
 			$('#ori_lr').html( ori['tiltLR'] );
 			$('#ori_fb').html( ori['tiltFB'] );
 			$('#ori_dir').html( ori['dir'] );
+			*/
+
+			$('#ori_lr').html( Math.floor( ori['tiltLR'] ) );
+			$('#ori_fb').html( Math.floor( ori['tiltFB'] ) );
 		}
-		
+
 		if( d ){
 			phoneData.d = d;
 			phoneData.publish();
@@ -155,7 +166,7 @@ function getDeviceId(){
 			did = unescape( unescape( str[1] ) );
 		}
 	}
-	
+
 	if( did != null ){
 		deviceid = did;
 	}else{
@@ -175,10 +186,10 @@ function generateDeviceId(){
 		c = hx.charAt( n );
 		did += c;
 	}
-	
+
 	var str = "deviceid=" + did;
 	document.cookie = str;
-	
+
 	return did;
 }
 </script>
@@ -190,13 +201,14 @@ function generateDeviceId(){
  <div data-role="header" data-position="fixed">
   <h1 id="deviceid">************</h1>
  </div>
- 
+
  <div data-role="content">
   <table border="1" cellspacing="0" data-theme="c" width="100%">
    <thead>
     <tr><th width="50%">Keys</th><th>Values</th></tr>
    </thead>
    <tbody>
+	 <!--
     <tr><td>Acceleration.X</td><td id="ac_x">&nbsp;</td></tr>
     <tr><td>Acceleration.Y</td><td id="ac_y">&nbsp;</td></tr>
     <tr><td>Acceleration.Z</td><td id="ac_z">&nbsp;</td></tr>
@@ -209,6 +221,9 @@ function generateDeviceId(){
     <tr><td>Orientation.LR</td><td id="ori_lr">&nbsp;</td></tr>
     <tr><td>Orientation.FB</td><td id="ori_fb">&nbsp;</td></tr>
     <tr><td>Orientation.DIR</td><td id="ori_dir">&nbsp;</td></tr>
+		-->
+    <tr><td>左右</td><td id="ori_lr">&nbsp;</td></tr>
+    <tr><td>前後</td><td id="ori_fb">&nbsp;</td></tr>
    </tbody>
   </table>
  </div>
